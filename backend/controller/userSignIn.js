@@ -9,11 +9,12 @@ async function userSignInController(req, res) {
     if (!email) {
       throw new Error("Please provide email");
     }
-    if (!password) {
+    if (!password) {   
       throw new Error("Please provide password");
     }
 
     const user = await userModel.findOne({ email });
+    console.log(user)
 
     if (!user) {
       throw new Error("User not found");
@@ -23,27 +24,26 @@ async function userSignInController(req, res) {
 
     console.log("checkPassoword", checkPassword);
 
-    if (checkPassword) {
+    if(checkPassword){
       const tokenData = {
-        _id: user._id,
-        email: user.email,
-      };
+          _id : user._id,
+          email : user.email,
+      }
+      const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: 60 * 60 * 8 });
 
-      const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: 60 * 60 * 8,
-      });
+      console.log("Token : " , token)
 
       const tokenOption = {
-        httpOnly: true,
-        secure: true,
-      };
+          httpOnly : true,
+          secure : true
+      }
 
-      res.cookie("token", token, tokenOption).status(200).json({
-        message: "Login successfully",
-        data: token,
-        success: true,
-        error: false,
-      });
+      res.cookie("token",token,tokenOption).status(200).json({
+          message : "Login successfully",
+          data : token,
+          success : true,
+          error : false
+      })
     
     }else {
       throw new Error("Please check Password");
