@@ -1,7 +1,7 @@
-const productModel = require("../../models/productModel")
+const productModel = require("../../models/productModels")
 
 
-const getCategoryProduct = async(req,res)=>{
+const getCategoryProductOne = async(req,res)=>{
     try{
         const productCategory = await productModel.distinct("category")
 
@@ -11,13 +11,14 @@ const getCategoryProduct = async(req,res)=>{
         const productByCategory = []
 
         for(const category of productCategory){
+            console.log(category);
             const product = await productModel.findOne({category })
+            console.log("Product ------------\n",product);
 
             if(product){
                 productByCategory.push(product)
             }
         }
-
 
         res.json({
             message : "category product",
@@ -36,4 +37,4 @@ const getCategoryProduct = async(req,res)=>{
     }
 }
 
-module.exports = getCategoryProduct
+module.exports = getCategoryProductOne

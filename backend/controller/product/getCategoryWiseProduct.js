@@ -1,9 +1,11 @@
-const productModel = require("../../models/productModel")
+const productModel = require("../../models/productModels")
 
 const getCategoryWiseProduct = async(req,res)=>{
     try{
         const { category } = req?.body || req?.query
+        console.log("Request",req.body)
         const product = await productModel.find({ category })
+        console.log("Product",product)
 
         res.json({
             data : product,
@@ -21,3 +23,4 @@ const getCategoryWiseProduct = async(req,res)=>{
 }
 
 module.exports = getCategoryWiseProduct
+
