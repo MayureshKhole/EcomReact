@@ -29,7 +29,7 @@ const updateAddToCartProduct = require("../controller/user/updateAddToCartProduc
 
 router.post("/signup",userSignUpController)
 router.post("/signin",userSignInController)
-router.get("/user-details",authToken,userDetailsController)
+router.get("/user-details",userDetailsController)
 router.get("/userLogout",userLogout)
 
 
