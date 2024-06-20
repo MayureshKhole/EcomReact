@@ -5,15 +5,15 @@ const getCategoryProductOne = async(req,res)=>{
     try{
         const productCategory = await productModel.distinct("category")
 
-        console.log("category",productCategory)
+        // console.log("category",productCategory)
 
         //array to store one product from each category
         const productByCategory = []
 
         for(const category of productCategory){
-            console.log(category);
+            // console.log(category);
             const product = await productModel.findOne({category })
-            console.log("Product ------------\n",product);
+            // console.log("Product ------------\n",product);
 
             if(product){
                 productByCategory.push(product)
